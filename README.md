@@ -5,7 +5,7 @@ run docker:
 $ docker-compose up -d
 ```
 
-check nsq web ui: [](http://127.0.0.1:4171)
+check nsq web ui: `http://127.0.0.1:4171`
 
 run consumer:
 ```bash
