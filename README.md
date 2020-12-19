@@ -5,10 +5,7 @@ run docker:
 $ docker-compose up -d
 ```
 
-check nsq web ui:
-```bash
-$ curl 127.0.0.1:4171/ping
-```
+check nsq web ui: 127.0.0.1:4171
 
 run consumer:
 ```bash
