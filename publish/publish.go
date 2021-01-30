@@ -12,7 +12,7 @@ func main() {
     if err != nil {
         log.Panic(err)
     }
-    err = p.Publish("My_NSQ_Topic", []byte("sample NSQ message"))
+    err = p.Publish("user-topic", []byte("sample NSQ message"))
     if err != nil {
         log.Panic(err)
     }
