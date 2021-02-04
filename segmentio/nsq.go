@@ -45,16 +45,6 @@ func Producer() error {
 		fmt.Println(err.Error())
 	}
 
-	err = producer.Publish([]byte("Hello World!"))
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	err = producer.Publish([]byte("Hello World!"))
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
 	// Stops the producer, all in-flight requests will be canceled and no more
 	// messages can be published through this producer.
 	producer.Stop()
@@ -82,9 +72,9 @@ func Consumer() error {
 		fmt.Println(string(msg.Body))
 		msg.Finish()
 		if len(consumer.Messages()) == 0 {
-			return nil
+			break
 		}
 	}
-
+	consumer.Stop()
 	return err
 }
