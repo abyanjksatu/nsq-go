@@ -1,17 +1,35 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/segmentio/nsq-go"
+	"golang.org/x/sync/errgroup"
 )
 
 func main() {
-	Producer()
-	Consumer()
+	ctx := context.Background()
+	g, _ := errgroup.WithContext(ctx)
+
+	// Producer
+	g.Go(func() error {
+		return Producer()
+	})
+	if err := g.Wait(); err != nil {
+		fmt.Println(err.Error())
+	}
+
+	// Consumer
+	g.Go(func() error {
+		return Consumer()
+	})
+	if err := g.Wait(); err != nil {
+		fmt.Println(err.Error())
+	}
 }
 
-func Producer() {
+func Producer() error {
 	// Starts a new producer that publishes to the TCP endpoint of a nsqd node.
 	// The producer automatically handles connections in the background.
 	producer, _ := nsq.StartProducer(nsq.ProducerConfig{
@@ -27,12 +45,24 @@ func Producer() {
 		fmt.Println(err.Error())
 	}
 
+	err = producer.Publish([]byte("Hello World!"))
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	err = producer.Publish([]byte("Hello World!"))
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
 	// Stops the producer, all in-flight requests will be canceled and no more
 	// messages can be published through this producer.
 	producer.Stop()
+
+	return nil
 }
 
-func Consumer() {
+func Consumer() error {
 	// Create a new consumer, looking up nsqd nodes from the listed nsqlookup
 	// addresses, pulling messages from the 'world' channel of the 'hello' topic
 	// with a maximum of 250 in-flight messages.
@@ -51,5 +81,10 @@ func Consumer() {
 	for msg := range consumer.Messages() {
 		fmt.Println(string(msg.Body))
 		msg.Finish()
+		if len(consumer.Messages()) == 0 {
+			return nil
+		}
 	}
+
+	return err
 }
