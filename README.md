@@ -30,11 +30,4 @@ output:
 ```sh
 2021/02/06 06:31:42 opening nsqd connection to localhost:4150
 Hello World!
-2021/02/06 06:31:43 Consumer initiating shutdown sequence
-2021/02/06 06:31:43 sending CLS to all command channels
-2021/02/06 06:31:43 awaiting connection waitgroup
-2021/02/06 06:31:43 draining and requeueing remaining in-flight messages
-2021/02/06 06:31:43 closing and cleaning up connections
-2021/02/06 06:31:43 successfully flushed all connections
-2021/02/06 06:31:43 Consumer exiting run
 ```
