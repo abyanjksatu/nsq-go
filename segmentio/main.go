@@ -109,9 +109,11 @@ func (h *HelloNsqImpl) WaitConsume(handle func(msg *nsq.Message) error) error {
 }
 
 func main() {
-	helloNsq := NewHelloNsq()
+	// Run produer with errgroup goroutine, to add group use .Go()
+	// After group, you can start run with g.Wait() which return error
 	ctx := context.Background()
 	g, _ := errgroup.WithContext(ctx)
+	helloNsq := NewHelloNsq()
 
 	// Producer
 	g.Go(func() error {
@@ -131,31 +133,4 @@ func main() {
 	if err := g.Wait(); err != nil {
 		fmt.Println(err.Error())
 	}
-
-	// // Producer
-	// g.Go(func() error {
-	// 	helloNsq.Publisher().Start()
-	// 	err := helloNsq.Publisher().Publish([]byte("HALO"))
-	// 	defer helloNsq.Publisher().Stop()
-	// 	return err
-	// })
-	// if err := g.Wait(); err != nil {
-	// 	fmt.Println(err.Error())
-	// }
-
-	// // Consumer
-	// g.Go(func() error {
-	// 	helloNsq.Consumer().Start()
-	// 	for msg := range helloNsq.Consumer().Messages() {
-	// 		fmt.Println(string(msg.Body))
-	// 		if len(helloNsq.Consumer().Messages()) == 0 {
-	// 			break
-	// 		}
-	// 	}
-	// 	helloNsq.Consumer().Stop()
-	// 	return nil
-	// })
-	// if err := g.Wait(); err != nil {
-	// 	fmt.Println(err.Error())
-	// }
 }
