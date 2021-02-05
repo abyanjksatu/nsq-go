@@ -19,6 +19,7 @@ output:
 2021/02/06 06:31:29 INF    2 [hello-topic/hello-channel] (127.0.0.1:4150) connecting to nsqd
 2021/02/06 06:31:29 NSQ message received, msg: Hello World
 ```
+more info: https://github.com/nsqio/go-nsq
 
 ## segmentio/nsq-go
 
@@ -31,3 +32,4 @@ output:
 2021/02/06 06:31:42 opening nsqd connection to localhost:4150
 Hello World!
 ```
+more info: https://github.com/segmentio/nsq-go
