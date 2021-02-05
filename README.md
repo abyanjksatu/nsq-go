@@ -1,4 +1,4 @@
-# nsq-go
+# go-nsq
 
 run docker:
 ```bash
