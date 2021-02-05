@@ -110,6 +110,7 @@ func main() {
 	// Consumer
 	err := consumer.Consume(func(message *nsq.Message) error {
 		log.Printf("NSQ message received, msg: %s", string(message.Body))
+		message.Finish()
 		w.Done()
 		return nil
 	})
