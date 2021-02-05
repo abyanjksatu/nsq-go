@@ -1,6 +1,6 @@
 # go-nsq-compare
 
-run docker:
+Install & Run nsq daemon with Dockerfile:
 ```bash
 $ docker-compose up -d
 ```
